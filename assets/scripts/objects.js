@@ -1,9 +1,9 @@
 const addMovieBtn = document.getElementById("add-movie-btn");
-const serchBtn = document.getElementById("serch-btn");
+const searchBtn = document.getElementById("search-btn");
 
 const movies = [];
 
-const displayingMovies = () => {
+const displayingMovies = (filterTerm = "") => {
   const movieList = document.getElementById("movie-list");
 
   // the idile way is to not clear the html but append each new movie to the exiting elemnt
@@ -16,7 +16,9 @@ const displayingMovies = () => {
   }
   movieList.innerHTML = "";
 
-  movies.forEach( movie => {
+  const filterdMovies = !filterTerm ? movies : movies.filter(movie => movie.info.title.includes(filterTerm))
+
+  filterdMovies.forEach( movie => {
     const movieEl = document.createElement("li");
     // movieEl.textContent = movie.info.title;
     let movieInfo = movie.info.title + " - ";
@@ -55,4 +57,10 @@ const addMovieHandler = () => {
   displayingMovies()
 };
 
+const serchMovieHandler = () => {
+  const filterInput = document.getElementById("filter-title").value;
+  displayingMovies(filterInput)
+}
+
 addMovieBtn.addEventListener("click", addMovieHandler)
+searchBtn.addEventListener("click", serchMovieHandler)
